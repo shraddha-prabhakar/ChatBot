@@ -1,0 +1,67 @@
+ChatBot
+import datetime
+import dateutil.parser
+
+events = {}
+
+def add_event(date, event):
+    if date in events:
+        events[date].append(event)
+    else:
+        events[date] = [event]
+
+def list_events(date):
+    if date in events:
+        return events[date]
+    else:
+        return []
+
+def schedule_meeting(meeting_date, meeting_time, meeting_description):
+    meeting_datetime = dateutil.parser.parse(f"{meeting_date} {meeting_time}")
+    add_event(meeting_datetime.date(), f"Meeting: {meeting_description} ({meeting_time})")
+
+
+while True:
+    print("\nOptions:")
+    print("1. Add Event")
+    print("2. List Events for a particular date")
+    print("3. Schedule Meeting")
+    print("4. Exit")
+
+    choice = input("Enter your choice (1/2/3/4): ")
+
+    if choice == '1':
+        date = input("Enter the date for the event (YYYY-MM-DD): ")
+        event = input("Enter event description: ")
+        add_event(date, event)
+        print("Event added successfully!")
+        print("Thanks for choosing IITians! Have a great day.")
+
+    elif choice == '2':
+        date = input("Enter the date for the event to be searched (YYYY-MM-DD): ")
+        events_list = list_events(date)
+        if events_list:
+            print(f"Events for {date}:")
+            for event in events_list:
+                print(event)
+                print("Thanks for choosing IITians! Have a great day.")
+
+        else:
+            print("No events found for this date.")
+            print("Thanks for choosing IITians! Have a great day.")
+
+    elif choice == '3':
+        meeting_date = input("Enter the meeting date (YYYY-MM-DD): ")
+        meeting_time = input("Enter the meeting time (HH:MM AM/PM): ")
+        meeting_description = input("Enter meeting description: ")
+        schedule_meeting(meeting_date, meeting_time, meeting_description)
+        print("Meeting scheduled successfully!")
+        print("Thanks for choosing IITians! Have a great day.")
+
+    elif choice == '4':
+        print("Exiting the chatbot.")
+        print("Thanks for choosing IITians! Have a great day.")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
